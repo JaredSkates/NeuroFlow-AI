@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 // Responds with the Web Tab
 export const metadata: Metadata = {
-  title: "NeuroFlowAI",
+  title: "NeuroFlow AI",
 };
 
 export default function RootLayout({
