@@ -23,7 +23,7 @@ export default function Home() {
           <div className="mt-8"></div>
 
           <Link href={'/dashboard'} className="flex justify-center">
-            <Button className="bg-blue-300">
+            <Button className="bg-blue-300 cursor-pointer" >
               Ready to Dive In?
               <ArrowDownRight className="w-5 h-5 strokeWidth={3}"></ArrowDownRight>
             </Button>
