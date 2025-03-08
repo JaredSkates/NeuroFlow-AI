@@ -1,4 +1,5 @@
 "use client";
+import CreateNoteDialog from '@/components/CreateNoteDialog';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { UserButton } from '@clerk/nextjs';
@@ -38,6 +39,12 @@ const DashboardPage = (props: Props) => {
                 {/* Lists All The Notes Here + Conditionally Render */} 
                 <div className='text-center'>
                     <h2 className='font-semibold'>No Existing Notes.</h2>
+                    <div className="h-4"></div>
+                </div>
+
+                {/* Display all notes */}
+                <div className='grid sm:grid-cols-3 md:grid-cols-5 grid-cols-1 gap-3'>
+                    <CreateNoteDialog/>
                 </div>
 
             </div>
