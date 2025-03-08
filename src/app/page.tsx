@@ -4,7 +4,7 @@ import { ArrowDownRight } from "lucide-react";
 import Link from 'next/link';
 
 
-// 
+// Landing Page
 
 export default function Home() {
   return (
