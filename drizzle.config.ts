@@ -19,4 +19,4 @@ export default defineConfig({
   }
 });
 
-// Note: Run command 'npx drizzle-kit push' to push changes to the DB
+// Note: Run command 'npx drizzle-kit push' to push changes to the DB after making changes to the schema.ts file

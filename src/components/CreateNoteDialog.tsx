@@ -5,6 +5,8 @@ import React from 'react'
 import { DialogContent, DialogDescription, DialogTitle } from './ui/dialog';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
 
 type Props = {}
 
@@ -13,6 +15,25 @@ const CreateNoteDialog = (props: Props) => {
   // State to hold the input value, 'setInput' updates 'input'
   // [state, setState]  
   const [input, setInput] = React.useState('');
+
+  // TODO: Learn axios, useMutation, DOM Manipulation
+  const createNotebook = useMutation({
+    mutationFn: async() => {
+        const response = await axios.post('/api/createNoteBook', {
+            name: input,
+        });
+        return response.data;
+    } 
+  })
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(input === '') {
+        window.alert('Please enter a name for your notebook');
+        return;
+    }
+
+    createNotebook.mutate(undefined);
+  }; 
   
   return (
     <Dialog>
@@ -33,7 +54,7 @@ const CreateNoteDialog = (props: Props) => {
                     Create A New Note By Clicking The Button Below
                 </DialogDescription>
             </DialogHeader>
-            <form>
+            <form onSubmit={handleSubmit}>
                 {/* Bind the value into the state: 'input' , 'setInput' updates the value */}
                 {/* e: event, holds information when onChange occurs provided by React. */}
                 <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder='NoteBook Name'></Input>

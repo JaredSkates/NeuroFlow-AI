@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {ClerkProvider} from '@clerk/nextjs';
+import Provider from "@/components/Provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Responds with the Web Tab
+// Responds with the Web Tab -> Next.js
 export const metadata: Metadata = {
   title: "NeuroFlow AI",
 };
@@ -26,11 +27,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-        </body>
+        <Provider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+          </body>
+        </Provider>
       </html>
     </ClerkProvider>
   );

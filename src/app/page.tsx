@@ -13,7 +13,6 @@ export default function Home() {
           <h1 className="font-semibold text-7xl text-center">
             NeuroFlow AI 
             <span className="text-blue-300 font-bold"><br/>Assisted Note Taking.</span>
-            
             <div className="mt-4"></div>
           </h1>
           <h2 className="font-semibold text-3xl text-center text-white">
