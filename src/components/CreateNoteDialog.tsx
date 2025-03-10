@@ -1,5 +1,5 @@
 'use client';
-import { Plus } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { Dialog, DialogHeader, DialogTrigger } from './ui/dialog';
 import React from 'react'
 import { DialogContent, DialogDescription, DialogTitle } from './ui/dialog';
@@ -7,24 +7,32 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation'; // useRouter is a hook that allows us to programmatically navigate to a different page
 
 type Props = {}
 
 const CreateNoteDialog = (props: Props) => {
-
+  const router = useRouter();  // Navigate to a new page
   // State to hold the input value, 'setInput' updates 'input'
   // [state, setState]  
   const [input, setInput] = React.useState('');
 
   // TODO: Learn axios, useMutation, DOM Manipulation
+  // useMutation is a hook that allows us to perform mutations (create, update, delete) on the server
   const createNotebook = useMutation({
+    // Mutation function to create a new notebook
     mutationFn: async() => {
+        // Sends a POST request to the endpoint to create a new notebook
         const response = await axios.post('/api/createNoteBook', {
-            name: input,
+            // 'input' is the name of the notebook
+            name: input, // Data/req that gets passed into the API endpoint
         });
+        // Return the data from the POST request
         return response.data;
     } 
   })
+
+  // When you click 'create' button, it will call this function
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(input === '') {
@@ -32,7 +40,19 @@ const CreateNoteDialog = (props: Props) => {
         return;
     }
 
-    createNotebook.mutate(undefined);
+    // Trigger the mutation function to create a new notebook using mutate()
+    // 'undefined' is the argument for the mutation function, we don't need to pass anything
+    createNotebook.mutate(undefined, {
+        onSuccess: ({note_id}) => {
+            // Test: the JSON response from the endpoint is returned here
+            console.log('Notebook created successfully: ', {note_id} );
+            router.push(`/notebook/${note_id}`) // Navigate to the new notebook page
+        },
+        onError: error => {
+            console.error(error);
+            window.alert("Failed To Create")
+        }
+    });
   }; 
   
   return (
@@ -55,14 +75,19 @@ const CreateNoteDialog = (props: Props) => {
                 </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
-                {/* Bind the value into the state: 'input' , 'setInput' updates the value */}
-                {/* e: event, holds information when onChange occurs provided by React. */}
+                {/* Bind the input field's value into the state: 'input' , 'setInput' updates the value */}
+                {/* e: event, holds information when onChange occurs provided by React, w/o onChange we can't type in the field. */}
                 <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder='NoteBook Name'></Input>
                 
                 <div className="h-4"></div>
                 <div className="flex items-center gap-2">
                     <Button type='reset' variant='secondary'>Cancel</Button>
-                    <Button type='submit' className='bg-blue-300'>Create</Button>
+                    <Button type='submit' className='bg-blue-300' disabled={createNotebook.isPending}>
+                        {createNotebook.isPending && (
+                            <Loader2 className='w-4 h-4 mr-2 animate-spin'/>
+                        )}
+                        Create
+                    </Button>
                 </div>
             </form>
         </DialogContent>

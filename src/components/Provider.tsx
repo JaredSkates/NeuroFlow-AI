@@ -8,8 +8,8 @@ type Props = {
 
 const queryClient = new QueryClient();
 
-// Provider component to wrap around the app, providing the query client to all components
-// Useful to prevent hitting the endpoint multiple times. Use the results from the cache
+// Provider component to wrap around the app or the body, providing the query client to all components
+// Useful to prevent hitting the endpoint multiple times. Store results in cache then refetch when needed.
 const Provider = ({children}: Props) => {
   return (
     <QueryClientProvider client={queryClient}>

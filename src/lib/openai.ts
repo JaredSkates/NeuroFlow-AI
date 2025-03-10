@@ -15,22 +15,31 @@ export async function generateImagePrompt(name: string) {
             messages: [
                 {
                     role: 'system', // System message, instructs the AI on how to behave
-                    content: `You are a helpful assitant in a note taking app. I want you to generate a accurate, and descriptive prompt for an image that is related to the given name.`,
+                    content: `You are a helpful assitant in a note taking app. I want you to generate a accurate, and descriptive prompt for an image that is related to the given name. Please make the image minimal and simple`,
                 },
                 {
-                    role: 'user',
+                    role: 'user', // User message, the input from the user
                     content: `Generate a thumbnail description for my notebook titled ${name}.`,
                 }
             ],
-            response_format:{"type": "json_object"},
        });
 
-       const prompt = chatCompletion.choices[0].message.content;
+       const prompt = chatCompletion.choices[0].message.content; 
        return prompt as string;
    } catch(error) {throw error;}
 }
 
 // Responsible for using Open AI to generate an image based on the prompt
-export async function generateImage() {
+export async function generateImage(prompt: string) {
+    try {
+        const image = await client.images.generate({
+            prompt: prompt,
+            n: 1,
+            size: '256x256',
+        })
 
+        const imageUrl = image.data[0].url;
+        return imageUrl as string;
+
+    } catch(error) {console.error(error)}
 }
