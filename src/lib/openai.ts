@@ -43,3 +43,25 @@ export async function generateImage(prompt: string) {
 
     } catch(error) {console.error(error)}
 }
+
+// Responsible for using Open AI to generate a summary of the notebook
+// { TODO: Do not save summary to DB, just return as needed. }
+export async function generateSummary(notes: string) {
+    try {
+        const chatCompletion = await client.chat.completions.create({
+            model: 'gpt-3.5-turbo',
+            messages: [
+                {
+                    role: 'system',
+                    content: `You are a helpful assistant in a AI assisted note taking app. I want you to generate a summary for the notebook. Please make it short and conside, preferably 300 words or less. Do not include any introduction.`,
+                },
+                {
+                    role: 'user',
+                    content: `Generate a clear and easy to understand summary using these notes provided: ${notes}.`,
+                }
+            ],
+        })
+        const summary = chatCompletion.choices[0].message.content;
+        return summary as string;
+    } catch(error) {console.log(error)}
+}

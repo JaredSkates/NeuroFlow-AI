@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
+/* In V4 We can automatically use plugins here to use tailwind libraries */
 @plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -126,4 +128,15 @@
   button {
     cursor: pointer;
   }
+}
+
+/* Styling for the editor */
+.tiptap.ProseMirror {
+  outline: none;
+}
+
+/* Style buttons are active; styling */
+.is-active {
+  background-color: rgb(139, 217, 204);
+  border-radius: 3px;
 }

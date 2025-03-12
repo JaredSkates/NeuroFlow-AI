@@ -21,14 +21,15 @@ const CreateNoteDialog = (props: Props) => {
   // useMutation is a hook that allows us to perform mutations (create, update, delete) on the server
   const createNotebook = useMutation({
     // Mutation function to create a new notebook
+    // Useful for mutations such as creating, updating, or deleting data on the server
     mutationFn: async() => {
         // Sends a POST request to the endpoint to create a new notebook
-        const response = await axios.post('/api/createNoteBook', {
+        const response = await axios.post('/api/createNoteBook', { // axios helps to send data to endpoint
             // 'input' is the name of the notebook
             name: input, // Data/req that gets passed into the API endpoint
         });
         // Return the data from the POST request
-        return response.data;
+        return response.data; // Returns note_id
     } 
   })
 
@@ -43,7 +44,7 @@ const CreateNoteDialog = (props: Props) => {
     // Trigger the mutation function to create a new notebook using mutate()
     // 'undefined' is the argument for the mutation function, we don't need to pass anything
     createNotebook.mutate(undefined, {
-        onSuccess: ({note_id}) => {
+        onSuccess: ({note_id}) => { // onSuccess is an callback function when a mutation is successful
             // Test: the JSON response from the endpoint is returned here
             console.log('Notebook created successfully: ', {note_id} );
             router.push(`/notebook/${note_id}`) // Navigate to the new notebook page
@@ -83,7 +84,7 @@ const CreateNoteDialog = (props: Props) => {
                 <div className="flex items-center gap-2">
                     <Button type='reset' variant='secondary'>Cancel</Button>
                     <Button type='submit' className='bg-blue-300' disabled={createNotebook.isPending}>
-                        {createNotebook.isPending && (
+                        {createNotebook.isPending && ( // If the mutation is pending, show the loader
                             <Loader2 className='w-4 h-4 mr-2 animate-spin'/>
                         )}
                         Create

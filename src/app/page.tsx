@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 
 // Landing Page
-
 export default function Home() {
   return (
     <div className="bg-gradient-to-br min-h-screen from-blue-50 to-gray-300">
