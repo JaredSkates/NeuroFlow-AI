@@ -4,13 +4,12 @@ import { Button } from './ui/button'
 import { ArrowDownFromLine } from 'lucide-react'
 import { NoteType } from '@/lib/db/schema';
 import axios from 'axios';
-import NoteType from '@/lib/db/schema';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 
 type Props = { note : NoteType } // Passed from the notebook page
 
-// {TODO: Fix editorState for summary; Not passing updated editorState}
+// {TODO: Fix editorState for summary (Not passing updated editorState) & Fix UI Issues}
 const Summary = ( {note} : Props) => {
   const [summary, setSummary] = React.useState(''); // Holds and updates the content of the summary
 
@@ -26,7 +25,7 @@ const Summary = ( {note} : Props) => {
   })
   const handleClick = async () => {
     createSummary.mutate(undefined, {
-        onSuccess: (data) => {
+        onSuccess: (summary) => {
             console.log('Summary created successfully');
         },
         onError: (error) => {

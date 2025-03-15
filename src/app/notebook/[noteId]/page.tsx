@@ -22,7 +22,7 @@ type Props = {
 const NotebookPage = async ({params}: Props) => {
 
   const { noteId } = await params;
-  const { userId } = await auth(); // Check authentication
+  const { userId } = await auth(); // extracts userId if valid authentication
   
   if(!userId) {
     return redirect("/dashboard");
@@ -35,7 +35,7 @@ const NotebookPage = async ({params}: Props) => {
   const notes = await db
     .select() // select all
     .from($notes) // from notes table
-    .where( // where 
+    .where( // where noteId and userId match the ones in the database
         and(
             eq($notes.id, parseInt(noteId)), // $notes.id == noteId (conver string to int)
             eq($notes.userId, userId), // $notes.userId == userId

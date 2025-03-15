@@ -4,6 +4,7 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 })
 
+// Initialize the OpenAI client with the API key from environment variables
 // Responsible for using Open AI to generate a descriptive prompt for the image
 export async function generateImagePrompt(name: string) {
     /*
