@@ -9,6 +9,7 @@ import  Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Summary from '@/components/Summary';
 import React from 'react'
+import { DeleteButton } from '@/components/DeleteButton';
 // [noteId] wildcard to access Id variable
 
 type Props = {
@@ -42,13 +43,17 @@ const NotebookPage = async ({params}: Props) => {
         )
   );
 
-  // Check if the note is the proper one
+  // Check if the note is the proper one through a unique identifier (noteId).
   if(notes.length != 1) {
     return redirect('/dashboard')
   }
 
+
+
   // If the note is found, return it & TODO: Find how note[0] returns the object
   const note = notes[0];
+
+  console.log(note);
 
   return (
       // <pre>{JSON.stringify(note, null, 2)}</pre> : Check the note object in the browser
@@ -60,7 +65,7 @@ const NotebookPage = async ({params}: Props) => {
                 </Link>
                 <h1 className='text-stone-500 font-semibold'><span className='font-semibold text-black'>{user.firstName} {user.lastName} / </span>{note.name}</h1>
                 <div className='ml-auto'>
-                    <Button variant='destructive'/>
+                    <DeleteButton note={note} />
                 </div>
             </div>
             

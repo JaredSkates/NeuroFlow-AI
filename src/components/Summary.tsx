@@ -12,12 +12,12 @@ type Props = { note : NoteType } // Passed from the notebook page
 // {TODO: Fix editorState for summary (Not passing updated editorState) & Fix UI Issues}
 const Summary = ( {note} : Props) => {
   const [summary, setSummary] = React.useState(''); // Holds and updates the content of the summary
-
+  
   const createSummary = useMutation({
     mutationFn: async () => {
         try{
             const reponse = await axios.post('/api/createSummary', {
-                notes: note.editorState, // Send the editor state to the API
+                notes: note.editorState, // Pass the editorState to the API
             })
             return setSummary(reponse.data.summary);
         } catch(error) {return console.log(error);}

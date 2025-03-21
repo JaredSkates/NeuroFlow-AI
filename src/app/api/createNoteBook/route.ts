@@ -33,6 +33,7 @@ export async function POST(req: Request) {
         return new Response("Failed to generate image", { status: 500 });
     }
 
+
     // Inserts the notebook into the database using the values from the request body.
     const note_ids = await db.insert($notes).values({
         name, 

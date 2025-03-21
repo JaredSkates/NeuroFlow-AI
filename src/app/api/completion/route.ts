@@ -1,11 +1,11 @@
 // /api/completion
 
 import { openai } from "@ai-sdk/openai"; // Automaticaly reads you api key from .env
-import { streamText } from "ai";
+import { streamText } from "ai"; // Vercel SDK
 
 export async function POST(req: Request) {
   
-  // Variable name must match the name in the client-side code when storing the request
+  // Variable name must match the name in the client-side code when storing the request; Works like a key
   const body = await req.json();
   const { prompt } = body;
 
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     prompt: `Generate a completion for the following text: ${prompt}`,
   })
 
-  // Convert to a readable stream
+  // Convert to a readable stream for the client-side to consume
   const stream = response.toDataStreamResponse();
 
   return stream;

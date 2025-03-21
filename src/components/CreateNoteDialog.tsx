@@ -17,6 +17,16 @@ const CreateNoteDialog = (props: Props) => {
   // [state, setState]  
   const [input, setInput] = React.useState('');
 
+  const uploadToFirebase = useMutation({
+    mutationFn: async (noteId) => {
+
+        const response = await axios.post('/api/uploadToFirebase', {
+            noteId: noteId, 
+        });
+        return response.data; // Return the response data
+    },
+ });
+
   // TODO: Learn axios, useMutation, DOM Manipulation
   // useMutation is a hook that allows us to perform mutations (create, update, delete) on the server
   const createNotebook = useMutation({
@@ -47,6 +57,7 @@ const CreateNoteDialog = (props: Props) => {
         onSuccess: ({note_id}) => { // onSuccess is an callback function when a mutation is successful
             // Test: the JSON response from the endpoint is returned here
             console.log('Notebook created successfully: ', {note_id} );
+            uploadToFirebase.mutate(note_id); // Call the uploadToFirebase mutation to upload the image to Firebase
             router.push(`/notebook/${note_id}`) // Navigate to the new notebook page
         },
         onError: error => {
