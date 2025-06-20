@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        {/* Wrap component  */}
+        {/* Wrap component w/ queryProvider for efficient API requests  */}
         <Provider>
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}

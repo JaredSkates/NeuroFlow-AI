@@ -11,9 +11,12 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useCompletion } from '@ai-sdk/react';
 
-type Props = { note : NoteType};
+type Props = { 
+  note : NoteType;
+  onEditorStateChange?: (editrState: string) => void;
+};
 
-const TipTapEditor = ({note} : Props) => {
+const TipTapEditor = ({note, onEditorStateChange} : Props) => {
   const [editorState, setEditorState] = React.useState( note.editorState ||  `<h1>${note.name}</h1>`);  // Holds and updates the content of the editor otherwise display note name
 
   // useCompletion() allows us to return the completion text from the API
@@ -62,7 +65,9 @@ const TipTapEditor = ({note} : Props) => {
     extensions: [StarterKit, customText], // Extensions for the editor
     content: editorState, // State of the editor
     onUpdate: ({editor}) => { // Event Handler -> When the editor is changed, we update the editorState
-        setEditorState(editor.getHTML()); // Update the state with the current content of the editor
+        const newEditorState = editor.getHTML();
+        setEditorState(newEditorState); // Update the state with the current content of the editor
+        onEditorStateChange?.(newEditorState);
     },
 
   });

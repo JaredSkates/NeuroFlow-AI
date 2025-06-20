@@ -7,17 +7,20 @@ import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 
-type Props = { note : NoteType } // Passed from the notebook page
+type Props = { 
+    note : NoteType;
+    currentEditorState?: string; 
+} // Passed from the notebook page
 
 // {TODO: Fix editorState for summary (Not passing updated editorState) & Fix UI Issues}
-const Summary = ( {note} : Props) => {
+const Summary = ( {note, currentEditorState} : Props) => {
   const [summary, setSummary] = React.useState(''); // Holds and updates the content of the summary
   
   const createSummary = useMutation({
     mutationFn: async () => {
         try{
             const reponse = await axios.post('/api/createSummary', {
-                notes: note.editorState, // Pass the editorState to the API
+                notes: currentEditorState || note.editorState, // Pass the editorState to the API
             })
             return setSummary(reponse.data.summary);
         } catch(error) {return console.log(error);}

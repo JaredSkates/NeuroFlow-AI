@@ -22,7 +22,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to upload to Firebase' }, { status: 500 });
         }
 
-        await db.update($notes).set({ imageUrl: firebase_url }).where(eq($notes.id, parseInt(noteId))); // Update the note with the new Firebase URL
+        await db.update($notes).set({ imageUrl: firebase_url }).where(eq($notes.id, parseInt(noteId))); // Update the img column with the new Firebase URL
         // Update the note with the new Firebase URL
         return new NextResponse('ok', { status: 200 });
         

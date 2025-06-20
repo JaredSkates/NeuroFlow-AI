@@ -1,4 +1,3 @@
-import TipTapEditor from '@/components/TipTapEditor';
 import { Button } from '@/components/ui/button';
 import { clerk } from '@/lib/clerk-server';
 import { db } from '@/lib/db';
@@ -7,9 +6,10 @@ import { auth } from '@clerk/nextjs/server';
 import { and, eq } from 'drizzle-orm';
 import  Link from 'next/link';
 import { redirect } from 'next/navigation';
-import Summary from '@/components/Summary';
+import NotebookContent from '@/components/NotebookContent';
 import React from 'react'
 import { DeleteButton } from '@/components/DeleteButton';
+import { Notebook } from 'lucide-react';
 // [noteId] wildcard to access Id variable
 
 type Props = {
@@ -53,7 +53,7 @@ const NotebookPage = async ({params}: Props) => {
   // If the note is found, return it & TODO: Find how note[0] returns the object
   const note = notes[0];
 
-  console.log(note);
+  console.log(note); // Debugging purpose
 
   return (
       // <pre>{JSON.stringify(note, null, 2)}</pre> : Check the note object in the browser
@@ -71,16 +71,8 @@ const NotebookPage = async ({params}: Props) => {
             
             <div className='h-4'></div>
 
-            <div className='flex sm:flex-row w-full flex-col gap-4'>
-                {/* Display the note content */}
-                <div className='border shadow-xl border-stone-200 rounded-lg p-4 flex items-center sm:w-[70%] px-16 py-8'>
-                    {/* TipTapEditor Content */}
-                    <TipTapEditor note={note} />
-                </div>
-
-                {/* Summary Content Section */}
-                <Summary note={note} />
-            </div>
+            {/* Client Wrapper Component */}
+            <NotebookContent note={note} />
             
         </div>
     </div>

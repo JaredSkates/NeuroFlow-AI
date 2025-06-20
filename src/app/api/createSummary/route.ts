@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json(); // convert request body to JSON & Access request body
-    const {notes} = body as string; // We pass the contents in here
+    const {notes} = body as {notes: string}; // We pass the contents in here through converting the object's contents into a string (destructuring))
     
     // {TODO: Convert HTML to text for OpenAI}, Converion HTML -> Text
 
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         return new NextResponse("Failed to generate summary", { status: 500 });
     }
 
-    console.log(notes)
+    console.log(summary)
     // Return the summary as a JSON response
     return NextResponse.json({
         summary: summary,

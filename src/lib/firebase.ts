@@ -18,7 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+export const storage = getStorage(app); // Initialize Firebase Storage
 
 // Upload to image to firebase
 export async function uploadToFirebase(imageUrl: string, name: string) {

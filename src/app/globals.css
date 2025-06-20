@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* In V4 We can automatically use plugins here to use tailwind libraries */
+/* In V4 We can automatically use installed plugins here to use tailwind libraries */
 @plugin "tailwindcss-animate";
-@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/typography"; 
 
 @custom-variant dark (&:is(.dark *));
 
